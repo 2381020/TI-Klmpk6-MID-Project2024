@@ -1,18 +1,70 @@
 package PBO;
 
+
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+class BarangBangunan {
+    private String id;
+    private String nama;
+    private double harga;
+
+    public BarangBangunan(String id, String nama, double harga) {
+        this.id = id;
+        this.nama = nama;
+        this.harga = harga;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public double getHarga() {
+        return harga;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public void setHarga(double harga) {
+        this.harga = harga;
+    }
+
+    @Override
+    public String toString() {
+        return id + " - " + nama + " - Rp " + harga;
+    }
+}
+
 public class AplikasiTokoBangunan {
-    // Simpan data dalam ArrayList
-    private ArrayList<String> data = new ArrayList<>();
+    // Simpan data barang dalam ArrayList
+    private ArrayList<BarangBangunan> data = new ArrayList<>(); // Ubah tipe data menjadi ArrayList<BarangBangunan>
     private boolean loggedIn = false;
     private String loggedInPassword;
     private Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         AplikasiTokoBangunan app = new AplikasiTokoBangunan();
+
+        // Menambahkan data barang secara otomatis
+        app.data.add(new BarangBangunan("B001", "Semen", 50000));
+        app.data.add(new BarangBangunan("B002", "Bata Merah", 1000));
+        app.data.add(new BarangBangunan("B003", "Cat Tembok", 75000));
+        app.data.add(new BarangBangunan("B004", "Keramik 40x40", 120000));
+        app.data.add(new BarangBangunan("B005", "Pasir 1 Kubik", 600000));
+        app.data.add(new BarangBangunan("B006", "Kayu Balok", 30000));
+        app.data.add(new BarangBangunan("B007", "Paku 3cm", 15000));
+        app.data.add(new BarangBangunan("B008", "Besi Beton 12mm", 90000));
+        app.data.add(new BarangBangunan("B009", "Pintu Kayu Jati", 3500000));
+        app.data.add(new BarangBangunan("B010", "Genteng", 5000));
+
         if (app.login()) {
             app.runMenu();
         } else {
@@ -49,20 +101,20 @@ public class AplikasiTokoBangunan {
             return false;
         }
     }
-//
+
     // Menu utama
     private void runMenu() {
         while (true) {
             System.out.println("\nDaftar fitur: ");
-            System.out.println("1. Tambah Data");
-            System.out.println("2. Edit Data");
-            System.out.println("3. Hapus Data");
-            System.out.println("4. Tampilkan Semua Data");
-            System.out.println("5. Cari Data Berdasarkan ID");
-            System.out.println("6. Cari Data Berdasarkan Nama");
-            System.out.println("7. Hitung Jumlah Data");
-            System.out.println("8. Ekspor Data");
-            System.out.println("9. Impor Data");
+            System.out.println("1. Tambah Data Barang");
+            System.out.println("2. Edit Data Barang");
+            System.out.println("3. Hapus Data Barang");
+            System.out.println("4. Tampilkan Semua Barang");
+            System.out.println("5. Cari Barang Berdasarkan ID");
+            System.out.println("6. Cari Barang Berdasarkan Nama");
+            System.out.println("7. Hitung Jumlah Barang");
+            System.out.println("8. Ekspor Data Barang");
+            System.out.println("9. Impor Data Barang");
             System.out.println("10. Reset Form");
             System.out.println("11. Validasi Input");
             System.out.println("12. Logout");
@@ -123,107 +175,119 @@ public class AplikasiTokoBangunan {
         }
     }
 
-    // Method untuk tambah data
+    // Method untuk tambah data barang
     private void tambahData() {
-        System.out.print("Masukkan ID: ");
+        System.out.print("Masukkan ID Barang: ");
         String id = scanner.nextLine();
-        System.out.print("Masukkan Nama: ");
+        System.out.print("Masukkan Nama Barang: ");
         String nama = scanner.nextLine();
+        System.out.print("Masukkan Harga Barang: ");
+        double harga = scanner.nextDouble();
+        scanner.nextLine(); // membersihkan buffer
 
         if (id.isEmpty() || nama.isEmpty()) {
             System.out.println("ID dan Nama tidak boleh kosong!");
             return;
         }
 
-        data.add(id + " - " + nama);
+        data.add(new BarangBangunan(id, nama, harga)); // Tambahkan objek BarangBangunan ke dalam ArrayList
         tampilkanData();
     }
 
-    // Method untuk edit data
+    // Method untuk edit data barang
     private void editData() {
-        System.out.print("Masukkan ID data yang ingin diubah: ");
+        System.out.print("Masukkan ID barang yang ingin diubah: ");
         String id = scanner.nextLine();
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).startsWith(id)) {
+        for (BarangBangunan barang : data) {
+            if (barang.getId().equals(id)) {
                 System.out.print("Masukkan Nama baru: ");
                 String namaBaru = scanner.nextLine();
-                data.set(i, id + " - " + namaBaru);
+                System.out.print("Masukkan Harga baru: ");
+                double hargaBaru = scanner.nextDouble();
+                scanner.nextLine(); // membersihkan buffer
+                barang.setNama(namaBaru);
+                barang.setHarga(hargaBaru);
                 tampilkanData();
                 return;
             }
         }
-        System.out.println("Data tidak ditemukan.");
+        System.out.println("Data barang tidak ditemukan.");
     }
 
-    // Method untuk hapus data
+    // Method untuk hapus data barang
     private void hapusData() {
-        System.out.print("Masukkan ID data yang ingin dihapus: ");
+        System.out.print("Masukkan ID barang yang ingin dihapus: ");
         String id = scanner.nextLine();
-        data.removeIf(d -> d.startsWith(id));
+        data.removeIf(barang -> barang.getId().equals(id)); // Gunakan method getId untuk mencari barang
         tampilkanData();
     }
 
-    // Method untuk menampilkan semua data
+    // Method untuk menampilkan semua barang
     private void tampilkanData() {
-        System.out.println("\nData yang tersimpan:");
-        for (String item : data) {
-            System.out.println(item);
+        System.out.println("\nData barang yang tersimpan:");
+        for (BarangBangunan item : data) {
+            System.out.println(item); // toString method dari BarangBangunan akan dipanggil otomatis
         }
     }
 
-    // Method untuk cari data berdasarkan ID
+    // Method untuk cari barang berdasarkan ID
     private void cariDataByID() {
-        System.out.print("Masukkan ID yang ingin dicari: ");
+        System.out.print("Masukkan ID barang yang ingin dicari: ");
         String id = scanner.nextLine();
-        for (String item : data) {
-            if (item.startsWith(id)) {
-                System.out.println("Data ditemukan: " + item);
+        for (BarangBangunan item : data) {
+            if (item.getId().equals(id)) {
+                System.out.println("Barang ditemukan: " + item);
                 return;
             }
         }
-        System.out.println("Data tidak ditemukan.");
+        System.out.println("Barang tidak ditemukan.");
     }
 
-    // Method untuk cari data berdasarkan nama
+    // Method untuk cari barang berdasarkan nama
     private void cariDataByNama() {
-        System.out.print("Masukkan Nama yang ingin dicari: ");
+        System.out.print("Masukkan Nama barang yang ingin dicari: ");
         String nama = scanner.nextLine();
-        for (String item : data) {
-            if (item.contains(nama)) {
-                System.out.println("Data ditemukan: " + item);
+        for (BarangBangunan item : data) {
+            if (item.getNama().toLowerCase().contains(nama.toLowerCase())) {
+                System.out.println("Barang ditemukan: " + item);
                 return;
             }
         }
-        System.out.println("Data tidak ditemukan.");
+        System.out.println
+
+                ("Barang tidak ditemukan.");
     }
 
-    // Method untuk hitung jumlah data
+    // Method untuk hitung jumlah barang
     private void hitungJumlahData() {
-        System.out.println("Jumlah data: " + data.size());
+        System.out.println("Jumlah barang: " + data.size());
     }
 
-    // Method untuk ekspor data ke file
+    // Method untuk ekspor data barang ke file
     private void eksporData() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("Bangunan.txt"))) {
-            for (String item : data) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("BarangBangunan.txt"))) {
+            for (BarangBangunan item : data) {
                 writer.println(item);
             }
-            System.out.println("Data berhasil diekspor ke: " + new File("Bangunan.txt").getAbsolutePath());
+            System.out.println("Data barang berhasil diekspor ke: " + new File("BarangBangunan.txt").getAbsolutePath());
         } catch (IOException e) {
             System.out.println("Gagal mengekspor data.");
             e.printStackTrace();
         }
     }
 
-    // Method untuk impor data dari file
+    // Method untuk impor data barang dari file
     private void imporData() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("Bangunan.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("BarangBangunan.txt"))) {
             data.clear();
             String line;
             while ((line = reader.readLine()) != null) {
-                data.add(line);
+                String[] parts = line.split(" - ");
+                if (parts.length == 3) {
+                    data.add(new BarangBangunan(parts[0], parts[1], Double.parseDouble(parts[2].replace("Rp ", ""))));
+                }
             }
-            System.out.println("Data berhasil diimpor.");
+            System.out.println("Data barang berhasil diimpor.");
             tampilkanData();
         } catch (IOException e) {
             System.out.println("Gagal mengimpor data.");
@@ -238,25 +302,29 @@ public class AplikasiTokoBangunan {
 
     // Method untuk validasi input
     private void validasiInput() {
-        System.out.print("Masukkan ID: ");
+        System.out.print("Masukkan ID Barang: ");
         String id = scanner.nextLine();
-        System.out.print("Masukkan Nama: ");
+        System.out.print("Masukkan Nama Barang: ");
         String nama = scanner.nextLine();
+        System.out.print("Masukkan Harga Barang: ");
+        double harga = scanner.nextDouble();
+        scanner.nextLine(); // membersihkan buffer
 
         if (id.isEmpty() || nama.isEmpty()) {
             System.out.println("Input tidak valid! ID dan Nama harus diisi.");
+        } else if (harga <= 0) {
+            System.out.println("Input tidak valid! Harga harus lebih dari 0.");
         } else {
             System.out.println("Input valid.");
         }
     }
-
 
     private void logout() {
         while (true) {
             System.out.print("Masukkan Password untuk logout: ");
             String password = scanner.nextLine();
 
-            if (password.equals(loggedInPassword)) { // Cek apakah password cocok
+            if (password.equals(loggedInPassword)) {
                 loggedIn = false;
                 System.out.println("Anda telah logout.");
                 break;
