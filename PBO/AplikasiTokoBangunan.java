@@ -1,9 +1,8 @@
 package PBO;
-
-
-
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 class BarangBangunan {
@@ -119,6 +118,7 @@ public class AplikasiTokoBangunan {
             System.out.println("11. Validasi Input");
             System.out.println("12. Logout");
             System.out.println("13. Keluar");
+            System.out.println("14. Sortir Barang");
 
             System.out.print("Masukkan pilihan Anda: ");
             int pilihan = scanner.nextInt();
@@ -149,24 +149,27 @@ public class AplikasiTokoBangunan {
                 cariDataByNama();
                 break;
             case 7:
-                hitungJumlahData();
+                menuSortir();
                 break;
             case 8:
-                eksporData();
+                hitungJumlahData();
                 break;
             case 9:
-                imporData();
+                eksporData();
                 break;
             case 10:
-                resetForm();
+                imporData();
                 break;
             case 11:
-                validasiInput();
+                resetForm();
                 break;
             case 12:
-                logout();
+                validasiInput();
                 break;
             case 13:
+                logout();
+                break;
+            case 14:
                 keluarAplikasi();
                 break;
             default:
@@ -174,6 +177,7 @@ public class AplikasiTokoBangunan {
                 break;
         }
     }
+
 
     // Method untuk tambah data barang
     private void tambahData() {
@@ -256,6 +260,39 @@ public class AplikasiTokoBangunan {
         System.out.println
 
                 ("Barang tidak ditemukan.");
+    }
+
+    //Method untuk menu sortir
+    private void menuSortir() {
+        System.out.println("\nPilih metode sortir: ");
+        System.out.println("1. Berdasarkan ID");
+        System.out.println("2. Berdasarkan Nama");
+        System.out.println("3. Berdasarkan Harga");
+
+        System.out.println("Masukkan pilihan anda: ");
+        int pilihanSortir = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (pilihanSortir){
+            case 1:
+                Collections.sort(data, Comparator.comparing(BarangBangunan::getId));
+                System.out.println("Data barang diurutkan berdasarkan ID.");
+                tampilkanData();
+                break;
+            case 2:
+                Collections.sort(data, Comparator.comparing(BarangBangunan::getNama));
+                System.out.println("Data barang diurutkan berdasarkan Nama.");
+                tampilkanData();
+                break;
+            case 3:
+                Collections.sort(data, Comparator.comparingDouble(BarangBangunan::getHarga));
+                System.out.println("Data barang diurutkan berdasarkan Harga.");
+                tampilkanData();
+                break;
+            default:
+                System.out.println("Pilihan tidak valid!");
+                break;
+        }
     }
 
     // Method untuk hitung jumlah barang
