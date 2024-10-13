@@ -111,14 +111,14 @@ public class AplikasiTokoBangunan {
             System.out.println("4. Tampilkan Semua Barang");
             System.out.println("5. Cari Barang Berdasarkan ID");
             System.out.println("6. Cari Barang Berdasarkan Nama");
-            System.out.println("7. Hitung Jumlah Barang");
-            System.out.println("8. Ekspor Data Barang");
-            System.out.println("9. Impor Data Barang");
-            System.out.println("10. Reset Form");
-            System.out.println("11. Validasi Input");
-            System.out.println("12. Logout");
-            System.out.println("13. Keluar");
-            System.out.println("14. Sortir Barang");
+            System.out.println("7. Sortir Barang");
+            System.out.println("8. Hitung Jumlah Barang");
+            System.out.println("9. Ekspor Data Barang");
+            System.out.println("10. Impor Data Barang");
+            System.out.println("11. Reset Form");
+            System.out.println("12. Validasi Input");
+            System.out.println("13. Logout");
+            System.out.println("14. Keluar");
 
             System.out.print("Masukkan pilihan Anda: ");
             int pilihan = scanner.nextInt();
@@ -302,11 +302,11 @@ public class AplikasiTokoBangunan {
 
     // Method untuk ekspor data barang ke file
     private void eksporData() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("BarangBangunan.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("C:/Users/AdrewJordy/IdeaProjects/TI-Klmpk6-MID-Project2024/BarangBangunan.txt", true))) {
             for (BarangBangunan item : data) {
                 writer.println(item);
             }
-            System.out.println("Data barang berhasil diekspor ke: " + new File("BarangBangunan.txt").getAbsolutePath());
+            System.out.println("Data barang berhasil diekspor ke: " + new File("C:/Users/AdrewJordy/IdeaProjects/TI-Klmpk6-MID-Project2024/BarangBangunan.txt").getAbsolutePath());
         } catch (IOException e) {
             System.out.println("Gagal mengekspor data.");
             e.printStackTrace();
@@ -315,7 +315,7 @@ public class AplikasiTokoBangunan {
 
     // Method untuk impor data barang dari file
     private void imporData() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("BarangBangunan.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:/Users/AdrewJordy/IdeaProjects/TI-Klmpk6-MID-Project2024/BarangBangunan.txt"))) {
             data.clear();
             String line;
             while ((line = reader.readLine()) != null) {
