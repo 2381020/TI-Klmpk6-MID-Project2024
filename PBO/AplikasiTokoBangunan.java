@@ -74,7 +74,7 @@ public class AplikasiTokoBangunan {
     // Fitur login
     private boolean login() {
         System.out.print("Masukkan Username: ");
-        String username = scanner.nextLine();
+        String username = scanner.nextLine();                 //DIBUAT OLEH ASARYANT
         System.out.print("Masukkan Password: ");
         String password = scanner.nextLine();
 
@@ -200,7 +200,7 @@ public class AplikasiTokoBangunan {
 
     // Method untuk edit data barang
     private void editData() {
-        System.out.print("Masukkan ID barang yang ingin diubah: ");
+        System.out.print("Masukkan ID barang yang ingin diubah: ");           //DIBUAT OLEH ASARYANT
         String id = scanner.nextLine();
         for (BarangBangunan barang : data) {
             if (barang.getId().equals(id)) {
@@ -220,7 +220,7 @@ public class AplikasiTokoBangunan {
 
     // Method untuk hapus data barang
     private void hapusData() {
-        System.out.print("Masukkan ID barang yang ingin dihapus: ");
+        System.out.print("Masukkan ID barang yang ingin dihapus: ");                        //DIBUAT OLEH ASARYANT
         String id = scanner.nextLine();
         data.removeIf(barang -> barang.getId().equals(id)); // Gunakan method getId untuk mencari barang
         tampilkanData();
