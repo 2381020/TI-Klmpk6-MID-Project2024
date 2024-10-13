@@ -71,34 +71,32 @@ public class AplikasiTokoBangunan {
         }
     }
 
-    //Fitur Login
+   //Fitur Login
     private boolean login() {
-        System.out.print("Masukkan Username: ");
+        System.out.println("Masukkan Username: ");
         String username = scanner.nextLine();
         System.out.print("Masukkan Password: ");
         String password = scanner.nextLine();
 
-        if ("andrew".equals(username) && "andrew123".equals(password)) {
+        if ("Andrew".equals(username) && "andrew123".equals(password)) {
             loggedIn = true;
             loggedInPassword = password;
-            System.out.println("Login berhasil!, Selamat Datang Andrew");
+            System.out.println("Login Berhasil!, Selamat Datang Andrew");
             return true;
         }
-        if ("asaryant".equals(username) && "asaryant123".equals(password)) {
+        if ("Asaryant".equals(username) && "asaryant123".equals(password)) {
             loggedIn = true;
             loggedInPassword = password;
-            System.out.println("Login berhasil!, Selamat Datang Asaryant");
+            System.out.println("Login Berhasil!, Selamat Datang Asaryant");
             return true;
         }
-        if ("joshua".equals(username) && "joshua123".equals(password)) {
+        if ("Joshua".equals(username) && "joshua123".equals(password)) {
             loggedIn = true;
             loggedInPassword = password;
-            System.out.println("Login berhasil!, Selamat Datang Joshua");
+            System.out.println("Login Berhasil!, Selamat Datang Joshua");
             return true;
-        } else {
-            System.out.println("Login gagal!");
-            return false;
         }
+        return false;
     }
 
     // Menu utama
@@ -178,51 +176,50 @@ public class AplikasiTokoBangunan {
         }
     }
 
-
-    // Method untuk tambah data barang
-    private void tambahData() {
+    //Method Untuk Tambah Data Barang
+    private void tambahData(){
         System.out.print("Masukkan ID Barang: ");
         String id = scanner.nextLine();
         System.out.print("Masukkan Nama Barang: ");
         String nama = scanner.nextLine();
         System.out.print("Masukkan Harga Barang: ");
         double harga = scanner.nextDouble();
-        scanner.nextLine(); // membersihkan buffer
+        scanner.nextLine();//Membersihkan Buffer
 
-        if (id.isEmpty() || nama.isEmpty()) {
-            System.out.println("ID dan Nama tidak boleh kosong!");
+        if(id.isEmpty()||nama.isEmpty()){
+            System.out.println("ID dan Nama Tidak Boleh Kosong!");
             return;
         }
-
-        data.add(new BarangBangunan(id, nama, harga)); // Tambahkan objek BarangBangunan ke dalam ArrayList
+        data.add(new BarangBangunan(id, nama, harga));
+        //Tambahkan Objek Barang Bangunann ke Dalam ArrayList
         tampilkanData();
     }
 
-    // Method untuk edit data barang
-    private void editData() {
+    //Method Untuk Edit Data Barang
+    private void editData(){
         System.out.print("Masukkan ID barang yang ingin diubah: ");
         String id = scanner.nextLine();
-        for (BarangBangunan barang : data) {
-            if (barang.getId().equals(id)) {
-                System.out.print("Masukkan Nama baru: ");
+        for(BarangBangunan barang : data){
+            if(barang.getId().equals(id)){
+                System.out.print("Masukkan Nama Baru: ");
                 String namaBaru = scanner.nextLine();
-                System.out.print("Masukkan Harga baru: ");
+                System.out.print("Masukkan Harga Baru: ");
                 double hargaBaru = scanner.nextDouble();
-                scanner.nextLine(); // membersihkan buffer
+                scanner.nextLine();//Membersihkan Buffer
                 barang.setNama(namaBaru);
                 barang.setHarga(hargaBaru);
                 tampilkanData();
                 return;
             }
         }
-        System.out.println("Data barang tidak ditemukan.");
+        System.out.println("Data Barang Tidak Ditemukan.");
     }
 
-    // Method untuk hapus data barang
-    private void hapusData() {
-        System.out.print("Masukkan ID barang yang ingin dihapus: ");
+    //Method Untuk Hapus Data Barang
+    private void hapusData(){
+        System.out.print("Masukkan ID Barang yang ingin dihapus: ");
         String id = scanner.nextLine();
-        data.removeIf(barang -> barang.getId().equals(id)); // Gunakan method getId untuk mencari barang
+        data.removeIf(barang -> barang.getId().equals(id));//Gunakan Method GetID Untuk Mencari Barang
         tampilkanData();
     }
 
