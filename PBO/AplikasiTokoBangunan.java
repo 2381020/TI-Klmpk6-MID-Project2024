@@ -71,7 +71,7 @@ public class AplikasiTokoBangunan {
         }
     }
 
-    // Fitur login
+    //Fitur Login
     private boolean login() {
         System.out.print("Masukkan Username: ");
         String username = scanner.nextLine();
