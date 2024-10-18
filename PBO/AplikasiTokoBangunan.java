@@ -177,44 +177,125 @@ public class AplikasiTokoBangunan {
         String id = scanner.nextLine();
         System.out.print("Masukkan Nama Barang: ");
         String nama = scanner.nextLine();
-        System.out.print("Masukkan Harga Barang: ");
-        double harga = scanner.nextDouble();
-        scanner.nextLine(); // membersihkan buffer
 
+        // Validate that ID and Nama are not empty
         if (id.isEmpty() || nama.isEmpty()) {
             System.out.println("ID dan Nama tidak boleh kosong!");
             return;
         }
 
-        data.add(new BarangBangunan(id, nama, harga)); // Tambahkan objek BarangBangunan ke dalam ArrayList
-        tampilkanData();
-    }
-
-    // Method untuk edit data barang
-    private void editData() {
-        System.out.print("Masukkan ID barang yang ingin diubah: ");           //DIBUAT OLEH ASARYANT
-        String id = scanner.nextLine();
+        // Validate if ID is unique (if necessary)
         for (BarangBangunan barang : data) {
             if (barang.getId().equals(id)) {
-                System.out.print("Masukkan Nama baru: ");
-                String namaBaru = scanner.nextLine();
-                System.out.print("Masukkan Harga baru: ");
-                double hargaBaru = scanner.nextDouble();
-                scanner.nextLine(); // membersihkan buffer
-                barang.setNama(namaBaru);
-                barang.setHarga(hargaBaru);
-                tampilkanData();
+                System.out.println("ID Barang sudah ada. Gunakan ID yang berbeda.");
                 return;
             }
         }
-        System.out.println("Data barang tidak ditemukan.");
+
+        // Validate numeric input for harga
+        double harga = 0;
+        while (true) {
+            System.out.print("Masukkan Harga Barang: ");
+            if (scanner.hasNextDouble()) {
+                harga = scanner.nextDouble();
+                scanner.nextLine(); // Clear buffer
+                break;
+            } else {
+                System.out.println("Harga harus berupa angka! Silakan coba lagi.");
+                scanner.nextLine(); // Clear invalid input
+            }
+        }
+
+        // Tambahkan objek BarangBangunan ke dalam ArrayList
+        data.add(new BarangBangunan(id, nama, harga));
+
+        // Tampilkan data yang baru ditambahkan atau semua data yang ada
+        tampilkanData();
+    }
+
+
+    // Method untuk edit data barang
+    private void editData() {
+        System.out.print("Masukkan ID barang yang ingin diubah: ");  //DIBUAT OLEH ASARYANT
+        String id = scanner.nextLine();
+
+        // Mencari barang berdasarkan ID
+        BarangBangunan barangDitemukan = null;
+        for (BarangBangunan barang : data) {
+            if (barang.getId().equals(id)) {
+                barangDitemukan = barang;
+                break;
+            }
+        }
+
+        // Jika barang dengan ID yang dicari tidak ditemukan
+        if (barangDitemukan == null) {
+            System.out.println("Data barang dengan ID tersebut tidak ditemukan.");
+            return;
+        }
+
+        // Proses edit jika barang ditemukan
+        System.out.print("Masukkan Nama baru (Kosongkan jika tidak ingin mengubah): ");
+        String namaBaru = scanner.nextLine();
+
+        // Hanya mengubah nama jika input baru tidak kosong
+        if (!namaBaru.isEmpty()) {
+            barangDitemukan.setNama(namaBaru);
+        }
+
+        // Loop untuk validasi input harga baru
+        double hargaBaru = 0;
+        while (true) {
+            System.out.print("Masukkan Harga baru (Masukkan angka): ");
+            if (scanner.hasNextDouble()) {
+                hargaBaru = scanner.nextDouble();
+                scanner.nextLine(); // Membersihkan buffer
+                break;
+            } else {
+                System.out.println("Harga harus berupa angka! Silakan coba lagi.");
+                scanner.nextLine(); // Clear invalid input
+            }
+        }
+
+        // Set the new price
+        barangDitemukan.setHarga(hargaBaru);
+
+        System.out.println("Data barang berhasil diperbarui!");
+        tampilkanData(); // Tampilkan data yang sudah diubah
     }
 
     // Method untuk hapus data barang
     private void hapusData() {
-        System.out.print("Masukkan ID barang yang ingin dihapus: ");                        //DIBUAT OLEH ASARYANT
+        System.out.print("Masukkan ID barang yang ingin dihapus: ");  // DIBUAT OLEH ASARYANT
         String id = scanner.nextLine();
-        data.removeIf(barang -> barang.getId().equals(id)); // Gunakan method getId untuk mencari barang
+
+        // Cari barang berdasarkan ID
+        boolean barangDitemukan = false;
+        for (BarangBangunan barang : data) {
+            if (barang.getId().equals(id)) {
+                // Tanyakan konfirmasi sebelum menghapus
+                System.out.print("Apakah Anda yakin ingin menghapus barang ini? (y/n): ");
+                String confirm = scanner.nextLine();
+
+                if (!confirm.equalsIgnoreCase("y")) {
+                    System.out.println("Penghapusan dibatalkan.");
+                    return;
+                }
+
+                // Hapus barang jika konfirmasi diberikan
+                barangDitemukan = data.remove(barang);
+                break;
+            }
+        }
+
+        // Memberikan umpan balik kepada pengguna
+        if (barangDitemukan) {
+            System.out.println("Data barang dengan ID " + id + " berhasil dihapus.");
+        } else {
+            System.out.println("Data barang dengan ID " + id + " tidak ditemukan.");
+        }
+
+        // Tampilkan data setelah proses hapus
         tampilkanData();
     }
 
