@@ -1,9 +1,6 @@
 package PBO;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 class BarangBangunan {
     private String id;
@@ -71,35 +68,30 @@ public class AplikasiTokoBangunan {
         }
     }
 
-    // Fitur login
     private boolean login() {
+        // Simpan username dan password dalam HashMap
+        HashMap<String, String> users = new HashMap<>();
+        users.put("andrew", "andrew123");
+        users.put("asaryant", "asaryant123");
+        users.put("joshua", "joshua123");
+
         System.out.print("Masukkan Username: ");
-        String username = scanner.nextLine();                 //DIBUAT OLEH ASARYANT
+        String username = scanner.nextLine();
         System.out.print("Masukkan Password: ");
         String password = scanner.nextLine();
 
-        if ("andrew".equals(username) && "andrew123".equals(password)) {
+        // Cek apakah username ada dan password cocok
+        if (users.containsKey(username) && users.get(username).equals(password)) {
             loggedIn = true;
             loggedInPassword = password;
-            System.out.println("Login berhasil!, Selamat Datang Andrew");
-            return true;
-        }
-        if ("asaryant".equals(username) && "asaryant123".equals(password)) {
-            loggedIn = true;
-            loggedInPassword = password;
-            System.out.println("Login berhasil!, Selamat Datang Asaryant");
-            return true;
-        }
-        if ("joshua".equals(username) && "joshua123".equals(password)) {
-            loggedIn = true;
-            loggedInPassword = password;
-            System.out.println("Login berhasil!, Selamat Datang Joshua");
+            System.out.println("Login berhasil!, Selamat Datang " + username.substring(0, 1).toUpperCase() + username.substring(1));
             return true;
         } else {
             System.out.println("Login gagal!");
             return false;
         }
     }
+
 
     // Menu utama
     private void runMenu() {
